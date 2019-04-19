@@ -27,7 +27,6 @@
                     <PathGeometry>
                         <PathFigure
                             StartPoint="64,0"> <!--Should be "customSize/2,0"-->
-                            <!--Should be "customSize,customSize"-->
                             <ArcSegment
                                 x:Name="Arc"
                                 SweepDirection="Counterclockwise"
