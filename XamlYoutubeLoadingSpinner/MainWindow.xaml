@@ -10,6 +10,7 @@
         <Canvas
             Width="128"
             Height="128">
+            <!--Both values should be customSize/2-->
             <Canvas.RenderTransform>
                 <RotateTransform
                     x:Name="RotateCanvas"
