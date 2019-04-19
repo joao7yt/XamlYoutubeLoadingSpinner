@@ -18,11 +18,11 @@
                 <!--Both values should be customSize/2-->
             </Canvas.RenderTransform>
 
-            <!--Choose your custom color-->
-            <!--Choose your custom thickness-->
             <Path
                 Stroke="White"
                 StrokeThickness="8">
+                <!--Choose your custom color-->
+                <!--Choose your custom thickness-->
                 <Path.Data>
                     <PathGeometry>
                         <PathFigure
