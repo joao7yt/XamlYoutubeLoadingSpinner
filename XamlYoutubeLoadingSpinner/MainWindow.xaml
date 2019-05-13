@@ -3,168 +3,80 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xamlYoutubeLoadingSpinner="clr-namespace:XamlYoutubeLoadingSpinner"
         mc:Ignorable="d"
         Title="MainWindow"
-        Background="Black">
+        Background="Black"
+        d:DataContext="{d:DesignInstance Type=xamlYoutubeLoadingSpinner:MainWindowViewModel}"
+        FontSize="14"
+        Foreground="White">
     <Grid>
-        <Canvas
-            Width="128"
-            Height="128">
-            <!--Both values should be customSize/2-->
-            <Canvas.RenderTransform>
-                <RotateTransform
-                    x:Name="RotateCanvas"
-                    CenterX="64"
-                    CenterY="64" />
-                <!--Both values should be customSize/2-->
-            </Canvas.RenderTransform>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <xamlYoutubeLoadingSpinner:LoadingSpinner State="{Binding State}"
+                                                      Radius="{Binding Radius}"
+                                                      Thickness="{Binding Thickness}"
+                                                      LoadingRevolutionsPerSecond="{Binding LoadingRevolutionsPerSecond}"
+                                                      HangingRevolutionsPerSecond="{Binding HangingRevolutionsPerSecond}"/>
 
-            <Path
-                Stroke="White"
-                StrokeThickness="8">
-                <!--Choose your custom color-->
-                <!--Choose your custom thickness-->
-                <Path.Data>
-                    <PathGeometry>
-                        <PathFigure
-                            StartPoint="64,0"> <!--Should be "customSize/2,0"-->
-                            <ArcSegment
-                                x:Name="Arc"
-                                SweepDirection="Counterclockwise"
-                                IsLargeArc="True"
-                                Size="64,64"
-                                Point="128,64"/>
-                            <!--Size should be "customSize/2,customSize/2"-->
-                            <!--Point should be "customSize,customSize/2"-->
-                        </PathFigure>
-                    </PathGeometry>
-                </Path.Data>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 30 0 0">
+                <Button Content="Loading"
+                        Click="ButtonLoading_OnClick"
+                        Height="40"
+                        Margin="10"
+                        Padding="10"/>
+                <Button Content="Hanging"
+                        Click="ButtonHanging_OnClick"
+                        Height="40"
+                        Margin="10"
+                        Padding="10"/>
+            </StackPanel>
 
-                <Path.RenderTransform>
-                    <RotateTransform
-                        x:Name="RotatePath"
-                        CenterX="64"
-                        CenterY="64" />
-                     <!--Both values should be customSize/2-->
-                </Path.RenderTransform>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 30 0 0">
+                <Label Content="Radius:" Foreground="White" VerticalAlignment="Top" Margin="0 -7 0 0"/>
 
-                <Path.Triggers>
-                    <EventTrigger
-                        RoutedEvent="Path.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard
-                                TargetName="Arc"
-                                AutoReverse="True"
-                                RepeatBehavior="Forever">
-                                <PointAnimationUsingPath
-                                    Storyboard.TargetProperty="Point"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5">
-                                    <PointAnimationUsingPath.PathGeometry>
-                                        <PathGeometry
-                                            Figures="M 59.9814067501,0.12628938059 A 64,64 0 1 0 128,64" />
-                                        <!--M "tartPoint"
-                                                To find the start point
-                                                for your custom size, use
-                                                (customSize + (sin(183.6 degrees) * customSize))/2
-                                                for the first number and
-                                                (customSize + (sin(183.6 degrees) * customSize))/2
-                                                for the second one.
-                                            A "size" "rotation" "isLargeArc" "sweepDirection" "endPoint"
-                                                "A" is short for Arc.
-                                                The size should be "customSize/2,customSize/2".
-                                                The end point should be "customSize,customSize/2". -->
-                                    </PointAnimationUsingPath.PathGeometry>
-                                </PointAnimationUsingPath>
+                <Slider Value="{Binding Radius, Mode=TwoWay}" 
+                        Maximum="150"
+                        Minimum="10"
+                        Width="200"/>
+            </StackPanel>
 
-                                <BooleanAnimationUsingKeyFrames
-                                    Storyboard.TargetProperty="IsLargeArc"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5">
-                                    <DiscreteBooleanKeyFrame
-                                        KeyTime="0:0:0"
-                                        Value="False" />
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 30 0 0">
+                <Label Content="Thickness:" Foreground="White" VerticalAlignment="Top" Margin="0 -7 0 0"/>
 
-                                    <DiscreteBooleanKeyFrame
-                                        KeyTime="0:0:0.4616666"
-                                        Value="True" />
-                                </BooleanAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                        <BeginStoryboard>
-                            <Storyboard
-                                TargetName="RotatePath"
-                                RepeatBehavior="Forever">
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="0"
-                                    To="276" />
+                <Slider Value="{Binding Thickness, Mode=TwoWay}" 
+                        Maximum="100"
+                        Minimum="1"
+                        Width="190"/>
+            </StackPanel>
 
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    BeginTime="0:0:1.4"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="276"
-                                    To="552" />
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 30 0 0">
+                <Label Content="Loading Revolutions Per Second:" Foreground="White" VerticalAlignment="Top" Margin="0 -7 0 0"/>
 
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    BeginTime="0:0:2.8"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="552"
-                                    To="828" />
+                <Slider Value="{Binding LoadingRevolutionsPerSecond, Mode=TwoWay}" 
+                        Maximum="7"
+                        Minimum="0.05"
+                        Width="70"/>
+            </StackPanel>
 
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    BeginTime="0:0:4.2"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="828"
-                                    To="1104" />
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 30 0 0">
+                <Label Content="Hanging Revolutions Per Second:" Foreground="White" VerticalAlignment="Top" Margin="0 -7 0 0"/>
 
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    BeginTime="0:0:5.6"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="1104"
-                                    To="1380" />
-
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    BeginTime="0:0:6.3"
-                                    Duration="0:0:0.7"
-                                    AccelerationRatio=".5"
-                                    DecelerationRatio=".5"
-                                    From="1380"
-                                    To="1380" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                        <BeginStoryboard>
-                            <Storyboard
-                                TargetName="RotateCanvas"
-                                RepeatBehavior="Forever">
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="Angle"
-                                    Duration="0:0:7.0"
-                                    From="0"
-                                    To="1500" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Path.Triggers>
-            </Path>
-        </Canvas>
+                <Slider Value="{Binding HangingRevolutionsPerSecond, Mode=TwoWay}" 
+                        Maximum="7"
+                        Minimum="0.05"
+                        Width="70"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

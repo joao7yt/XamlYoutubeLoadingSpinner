@@ -20,9 +20,23 @@ namespace XamlYoutubeLoadingSpinner
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindowViewModel ViewModel = new MainWindowViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = ViewModel;
+        }
+
+        private void ButtonLoading_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.State = LoadingSpinner.SpinnerStates.Loading;
+        }
+
+        private void ButtonHanging_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.State = LoadingSpinner.SpinnerStates.Hanging;
         }
     }
 }
